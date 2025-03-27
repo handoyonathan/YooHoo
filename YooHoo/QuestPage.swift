@@ -123,6 +123,9 @@ struct QuestPage: View {
                     HStack {
                         VStack(spacing: 6) {
                             Image("Tantangan")
+                                .resizable()
+                                .frame(width: 64, height: 64)
+                                .scaledToFit()
                             Text("Terima Tantangan")
                                 .font(.subheadline)
                                 .fontWeight(.bold)
@@ -142,6 +145,9 @@ struct QuestPage: View {
                         VStack(spacing: 4){
                             
                             Image("List YooBuddy")
+                                .resizable()
+                                .frame(width: 64, height: 64)
+                                .scaledToFit()
                             Text("List YooBuddy")
                                 .font(.subheadline)
                                 .fontWeight(.bold)
