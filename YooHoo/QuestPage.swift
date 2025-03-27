@@ -106,7 +106,7 @@ struct QuestPage: View {
                             .font(.caption)
                             .foregroundStyle(.gray)
                     }
-                    .padding(.horizontal, 32)
+                    .padding(.horizontal, 16)
                     .padding(.vertical, 16)
                     .background(Color.white)
                     .cornerRadius(12)
@@ -142,7 +142,7 @@ struct QuestPage: View {
                         .cornerRadius(12)
                         
                         
-                        VStack(spacing: 4){
+                        VStack(spacing: 6){
                             
                             Image("List YooBuddy")
                                 .resizable()
