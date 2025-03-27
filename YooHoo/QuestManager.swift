@@ -105,7 +105,7 @@ class QuestManager: ObservableObject {
 
 
     init() {
-        shuffleQuest() // Langsung acak saat objek dibuat
+        shuffleQuest()
     }
 
     func shuffleQuest() {
