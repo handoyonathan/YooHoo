@@ -11,16 +11,17 @@ struct QuestPage: View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading) {
                         Text("Siap berkenalan?")
                             .font(.title)
                             .fontWeight(.bold)
+                            .padding(.bottom, 8)
                         Text("Pilih tantangan, ajak ngobrol, dan tambah YooBuddy baru!")
-                            .font(.body)
+                            .font(.subheadline)
                             .foregroundStyle(.black.opacity(0.7))
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 8)
+                    .padding(.top, 16) // Explicit top padding
+                    .padding(.horizontal) // Separate horizontal padding
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
                     VStack {
@@ -42,7 +43,6 @@ struct QuestPage: View {
                         .frame(maxWidth: .infinity)
                         .cornerRadius(12)
                         .padding(.horizontal, 16)
-                        .padding(.bottom, 8)
                         HStack(spacing: 12){
                             Button(action: {questManager.shuffleQuest()}) {
                                 HStack{
@@ -78,16 +78,14 @@ struct QuestPage: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal, 16)
-                        .padding(.bottom, 12)
                     }
                     
-                    VStack{
+                    VStack {
                         Text("Progressku")
                             .font(.title)
                             .fontWeight(.bold)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 16)
-                            
                     }
                     
                     VStack(spacing: 4) {
@@ -112,14 +110,12 @@ struct QuestPage: View {
                     .cornerRadius(12)
                     .frame(maxWidth: .infinity)
                     
-                    
                     VStack {
                         Text("Ada apa di YooHoo?")
                             .font(.title)
                             .fontWeight(.bold)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 16)
-                            .padding(.top, 16)
                     }
                     
                     HStack {
