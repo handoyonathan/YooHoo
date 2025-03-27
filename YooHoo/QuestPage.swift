@@ -102,6 +102,9 @@ struct QuestPage: View {
                         
                         HStack(){
                             Image("Level 1")
+                                .resizable()
+                                .frame(width: 52, height: 50)
+                                .scaledToFit()
                             Image("Level 2")
                             Image("Level 3")
                             Image("Level 4")
