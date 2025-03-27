@@ -20,7 +20,8 @@ struct QuestPage: View {
                             .font(.subheadline)
                             .foregroundStyle(.black.opacity(0.7))
                     }
-                    .padding()
+                    .padding(.top, 16)
+                    .padding(.horizontal)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
                     VStack {
@@ -134,13 +135,10 @@ struct QuestPage: View {
                         }
                         .padding()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        
                         .background(Color.white)
                         .cornerRadius(12)
                         
-                        
                         VStack(spacing: 6){
-                            
                             Image("List YooBuddy")
                                 .resizable()
                                 .frame(width: 64, height: 64)
@@ -160,17 +158,15 @@ struct QuestPage: View {
                         .cornerRadius(12)
                     }
                     .padding(.horizontal, 16)
-                    
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             }
             .background(Color.gray.opacity(0.05))
-            .sheet(isPresented: $showExperienceForm) { // Menambahkan sheet
+            .sheet(isPresented: $showExperienceForm) {
                 NavigationView {
                     ExperienceFormView()
                 }
             }
-            .background(Color.gray.opacity(0.05))
         }
     }
 }

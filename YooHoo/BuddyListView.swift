@@ -35,14 +35,9 @@ struct BuddyListView: View {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 12) {
                         Button(action: { showDetail = true }) {
-                            //                            VStack(spacing: 4) {
                             Image(systemName: "plus")
                                 .font(.system(size: 24, weight: .bold))
                                 .foregroundColor(.indigo)
-                            //                                Text("Tambah YooBuddy")
-                            //                                    .font(.caption)
-                            //                                    .foregroundColor(.gray)
-                            //                            }
                                 .frame(width: 174, height: 222)
                                 .background(Color.white)
                                 .cornerRadius(20)
@@ -57,6 +52,7 @@ struct BuddyListView: View {
                     .padding()
                 }
             }
+            .padding(.top, 16)
             .background(Color.gray.opacity(0.1))
             .sheet(isPresented: $showDetail) {
                 NavigationView {
