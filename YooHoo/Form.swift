@@ -102,6 +102,7 @@ struct ExperienceFormView: View {
             Spacer()
         }
         .padding()
+        .ignoresSafeArea(.keyboard)
         .navigationBarItems(
             leading: Button("Cancel") {
                 presentationMode.wrappedValue.dismiss()

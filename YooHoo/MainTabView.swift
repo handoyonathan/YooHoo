@@ -12,12 +12,10 @@ struct MainTabView: View {
         TabView{
             QuestPage()
                 .tabItem{
-//                    Image(systemName: "gift")
-//                    Text("Tantangan Harian")
                     Label("Tantangan Harian", systemImage: "gift")
                     
                 }
-            BuddyListView() //ini ganti ke page yang luna buat
+            BuddyListView()
                 .tabItem{
                     Label("List YooBuddy", systemImage: "person.3")
                     
