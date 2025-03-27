@@ -12,17 +12,19 @@ struct MainTabView: View {
         TabView{
             QuestPage()
                 .tabItem{
-                    Image(systemName: "gift")
-                    Text("Tantangan Harian")
+//                    Image(systemName: "gift")
+//                    Text("Tantangan Harian")
+                    Label("Tantangan Harian", systemImage: "gift")
                     
                 }
-            teesss() //ini ganti ke page yang luna buat
+            BuddyListView() //ini ganti ke page yang luna buat
                 .tabItem{
-                    Image(systemName: "person.3")
-                    Text("List YooBuddy")
+                    Label("List YooBuddy", systemImage: "person.3")
+                    
                 }
         }
         .background(Color.white)
+        .tint(Color.indigo)
         .ignoresSafeArea(edges: .bottom)
     }
 }
