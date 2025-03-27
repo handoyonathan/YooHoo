@@ -144,7 +144,7 @@ struct QuestPage: View {
                         VStack(spacing: 6){
                             Image("Tantangan")
                             Text("Terima Tantangan")
-                                .font(.headline)
+                                .font(.subheadline)
                                 .fontWeight(.bold)
                                 .foregroundStyle(.indigo)
                             
@@ -155,14 +155,16 @@ struct QuestPage: View {
                                 .font(.caption)
                         }
                         .padding()
-                        
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+
                         .background(Color.white)
                         .cornerRadius(12)
+                        
                         
                         VStack(spacing: 4){
                             Image("List YooBuddy")
                             Text("List YooBuddy")
-                                .font(.headline)
+                                .font(.subheadline)
                                 .fontWeight(.bold)
                                 .foregroundStyle(.indigo)
                             Text("Lihat kembali siapa saja yang sudah kamu temui dan kenali mereka lebih dalam.")
@@ -179,14 +181,16 @@ struct QuestPage: View {
                         
                     }
                     .padding(.horizontal, 16)
+//                    .padding()
+//                    .padding(.horizontal, 16)
                     
                     
                     
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                .background(Color.gray.opacity(0.05))
-                
+
             }
+            .background(Color.gray.opacity(0.05))
         }
     }
     
