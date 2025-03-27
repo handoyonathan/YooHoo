@@ -68,7 +68,7 @@ struct BuddyListView: View {
                     .padding()
                 }
             }
-            .background(Color.gray.opacity(0.1))
+            .background(Color.gray.opacity(0.05))
             .sheet(item: $selectedBuddy) { buddy in
                 BuddyDetailView(buddy: buddy)
             }
