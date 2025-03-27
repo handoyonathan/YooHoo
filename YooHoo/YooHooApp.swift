@@ -25,7 +25,8 @@ struct YooHooApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+//            ContentView()
+            BuddyListView()
         }
         .modelContainer(sharedModelContainer)
     }
