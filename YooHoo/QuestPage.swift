@@ -92,14 +92,7 @@ struct QuestPage: View {
                     
                     VStack(spacing: 4) {
                         HStack {
-                            Image("Level 1")
-                                .resizable()
-                                .frame(width: 52, height: 50)
-                                .scaledToFit()
-                            Image("Level 2")
-                            Image("Level 3")
-                            Image("Level 4")
-                            Image("Level 5")
+                            LevelBadgeView(buddyCount: buddies.count)
                         }
                         .padding(.bottom, 4)
                         Text("Mulai ngobrol dan temukan teman baru")
