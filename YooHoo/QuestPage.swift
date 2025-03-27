@@ -31,9 +31,6 @@ struct QuestPage: View {
                                 .frame(maxWidth: .infinity)
                                 .clipped()
                             VStack {
-                                Text("Topik Seru")
-                                    .font(.callout)
-                                    .foregroundStyle(.gray)
                                 Text(questManager.currentQuest)
                                     .font(.callout)
                                     .fontWeight(.medium)
