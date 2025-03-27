@@ -55,5 +55,7 @@ struct BuddyCardView: View {
 
 #Preview {
     BuddyCardView(buddy: Buddy(name: "Mimi", image: "mimi", description: "Teman yang asik!"), onTap: {})
-        .previewLayout(.sizeThatFits)
+        .previewLayout(.sizeThatFits) {
+            ExperienceFormView()
+        }
 }

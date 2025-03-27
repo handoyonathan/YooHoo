@@ -5,7 +5,7 @@ struct QuestPage: View {
     @State private var showExperienceForm = false
     @Environment(\.modelContext) var modelContext
     @Query private var buddies: [Buddy]
-    
+    @StateObject private var questManager = QuestManager()
     
     var body: some View {
         NavigationStack {
@@ -34,7 +34,7 @@ struct QuestPage: View {
                                 Text("Topik Seru")
                                     .font(.callout)
                                     .foregroundStyle(.gray)
-                                Text("Tanya seseorang tentang makna dari nama panggilannya")
+                                Text(questManager.currentQuest)
                                     .font(.callout)
                                     .fontWeight(.medium)
                                     .multilineTextAlignment(.center)
@@ -45,10 +45,9 @@ struct QuestPage: View {
                         .frame(maxWidth: .infinity)
                         .cornerRadius(12)
                         .padding(.horizontal, 16)
-                        
-                        HStack(spacing: 12) {
-                            Button(action: {}) {
-                                HStack {
+                        HStack(spacing: 12){
+                            Button(action: {questManager.shuffleQuest()}) {
+                                HStack{
                                     Image(systemName: "shuffle")
                                     Text("Acak Topik")
                                         .font(.callout)
@@ -56,8 +55,8 @@ struct QuestPage: View {
                                 .font(.headline)
                                 .fontWeight(.regular)
                                 .foregroundColor(.indigo)
-                                .padding(.vertical, 20)
-                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 14)
+                                .frame(maxWidth:.infinity)
                                 .background(Color.white)
                                 .cornerRadius(12)
                             }
@@ -73,8 +72,8 @@ struct QuestPage: View {
                                 .font(.headline)
                                 .fontWeight(.regular)
                                 .foregroundColor(.white)
-                                .padding(.vertical, 20)
-                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 14)
+                                .frame(maxWidth:.infinity)
                                 .background(Color.indigo)
                                 .cornerRadius(12)
                             }
