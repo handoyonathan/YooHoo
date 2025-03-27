@@ -12,7 +12,8 @@ import SwiftData
 struct YooHooApp: App {
     var body: some Scene {
         WindowGroup {
-            MainTabView() // Pakai TabView sebagai root view
+//            MainTabView() // Pakai TabView sebagai root view
+            Content2View()
 
         }
     }

@@ -56,5 +56,6 @@ struct ContentView: View {
 }
 
 #Preview {
-    BuddyListView()
+//    BuddyListView()
+    Content2View()
 }
