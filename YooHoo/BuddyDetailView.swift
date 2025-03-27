@@ -10,6 +10,9 @@ import SwiftUI
 struct BuddyDetailView: View {
     let buddy: Buddy
     
+    // Access the dismiss action from the environment
+    @Environment(\.dismiss) private var dismiss
+    
     var body: some View {
         VStack(spacing: 4) {
             // Load gambar dari file system berdasarkan path
@@ -34,16 +37,18 @@ struct BuddyDetailView: View {
                 .font(.title.bold())
                 .foregroundColor(.indigo)
                 .bold()
+                .padding(.top, 10)
             
             Text(buddy.experience)
                 .font(.body)
-                .padding().multilineTextAlignment(.center)
-            
+                .padding()
+                .multilineTextAlignment(.center)
             
             Spacer()
         }
-        .padding()
-        .presentationDetents([.medium, .medium])
+        .padding(.top, 30)
+        .padding(.horizontal) // Maintain horizontal padding
+        .presentationDetents([.medium, .large])
         .presentationDragIndicator(.visible)
     }
     
@@ -54,5 +59,9 @@ struct BuddyDetailView: View {
 }
 
 #Preview {
-    BuddyDetailView(buddy: Buddy(name: "Yeha", image: "yeha", description: "I asked Amelia if she had a nickname, and she told me her family calls her ‘Mimi.’ It started when she was little, and it just stuck! It was fun learning a personal story behind her name."))
+    BuddyDetailView(buddy: Buddy(
+        name: "Mimi",
+        image: "mimi",
+        description: "I asked Amelia if she had a nickname, and she told me her family calls her ‘Mimi.’ It started when she was little, and it just stuck! It was fun learning a personal story behind her name. I asked Amelia if she had a nickname, and she told me her family calls her ‘Mimi!’"
+    ))
 }

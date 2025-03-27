@@ -10,7 +10,7 @@ import SwiftData
 
 struct BuddyListView: View {
     @Environment(\.modelContext) var modelContext
-    @Query private var buddies: [Buddy]
+    @Query(sort: \Buddy.name, order: .forward) private var buddies: [Buddy]
     
     @State private var selectedBuddy: Buddy?
     @State private var showDetail = false
@@ -64,7 +64,7 @@ struct BuddyListView: View {
                 }
             }
             .sheet(item: $selectedBuddy) { buddy in
-                BuddyDetailView(buddy: buddy)
+                BuddyDetailView(buddy: buddy).presentationDetents([.medium, .large])
             }
         }
     }
