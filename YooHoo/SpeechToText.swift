@@ -9,7 +9,7 @@ import Speech
 import AVFoundation
 
 class SpeechRecognizer: NSObject, SFSpeechRecognizerDelegate {
-    private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
+    private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "id-ID"))
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     private let audioEngine = AVAudioEngine()
@@ -34,9 +34,9 @@ class SpeechRecognizer: NSObject, SFSpeechRecognizerDelegate {
             print("Speech recognizer is not available")
             return
         }
-
+        
         stopRecording()
-
+        
         let audioSession = AVAudioSession.sharedInstance()
         do {
             try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
@@ -45,7 +45,7 @@ class SpeechRecognizer: NSObject, SFSpeechRecognizerDelegate {
             print("Failed to set up audio session: \(error.localizedDescription)")
             return
         }
-
+        
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         guard let recognitionRequest = recognitionRequest else {
             print("Failed to create recognition request")
@@ -67,7 +67,7 @@ class SpeechRecognizer: NSObject, SFSpeechRecognizerDelegate {
             print("Failed to start audio engine: \(error.localizedDescription)")
             return
         }
-
+        
         recognitionTask = recognizer.recognitionTask(with: recognitionRequest) { result, error in
             if let result = result {
                 DispatchQueue.main.async {

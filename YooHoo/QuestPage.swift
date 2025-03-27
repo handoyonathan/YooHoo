@@ -1,17 +1,16 @@
-//
-//  QuestPage.swift
-//  YooHoo
-//
-//  Created by Amelia Morencia Irena on 25/03/25.
-//
-
 import SwiftUI
+import SwiftData
 
 struct QuestPage: View {
+    @State private var showExperienceForm = false
+    @Environment(\.modelContext) var modelContext
+    @Query private var buddies: [Buddy]
+    
+    
     var body: some View {
-        NavigationStack{
-            ScrollView{
-                VStack{
+        NavigationStack {
+            ScrollView {
+                VStack {
                     VStack(alignment: .leading) {
                         Text("Siap berkenalan?")
                             .font(.title)
@@ -24,38 +23,32 @@ struct QuestPage: View {
                     .padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    VStack{
-                        ZStack{
+                    VStack {
+                        ZStack {
                             Image(.cardQuest)
                                 .resizable()
                                 .scaledToFill()
                                 .frame(maxWidth: .infinity)
                                 .clipped()
-                            //                        .padding(.horizontal)
-                            VStack{
+                            VStack {
                                 Text("Topik Seru")
                                     .font(.callout)
                                     .foregroundStyle(.gray)
-                                //                            .padding(.bottom,16)
-                                
                                 Text("Tanya seseorang tentang makna dari nama panggilannya")
                                     .font(.callout)
                                     .fontWeight(.medium)
                                     .multilineTextAlignment(.center)
                                     .padding()
-                                
                             }
-                            
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            
                         }
                         .frame(maxWidth: .infinity)
                         .cornerRadius(12)
                         .padding(.horizontal, 16)
                         
-                        HStack(spacing: 12){
+                        HStack(spacing: 12) {
                             Button(action: {}) {
-                                HStack{
+                                HStack {
                                     Image(systemName: "shuffle")
                                     Text("Acak Topik")
                                         .font(.callout)
@@ -64,43 +57,42 @@ struct QuestPage: View {
                                 .fontWeight(.regular)
                                 .foregroundColor(.indigo)
                                 .padding(.vertical, 20)
-                                .frame(maxWidth:.infinity)
+                                .frame(maxWidth: .infinity)
                                 .background(Color.white)
                                 .cornerRadius(12)
                             }
                             
-                            Button(action: {}) {
-                                HStack{
+                            Button(action: {
+                                showExperienceForm = true
+                            }) {
+                                HStack {
                                     Image(systemName: "eyeglasses")
                                     Text("Ambil Tantangan")
                                         .font(.callout)
                                 }
-                                
                                 .font(.headline)
                                 .fontWeight(.regular)
                                 .foregroundColor(.white)
                                 .padding(.vertical, 20)
-                                .frame(maxWidth:.infinity)
+                                .frame(maxWidth: .infinity)
                                 .background(Color.indigo)
                                 .cornerRadius(12)
                             }
-                            
                         }
-                        .frame(maxWidth: .infinity) // Supaya HStack mengambil seluruh lebar
+                        .frame(maxWidth: .infinity)
                         .padding(.horizontal, 16)
                     }
-                    //                        .padding()
-                    VStack(){
+                    
+                    VStack {
                         Text("Progressku")
                             .font(.title)
                             .fontWeight(.bold)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 16)
-                        
                     }
-                    VStack(spacing: 4){
-                        
-                        HStack(){
+                    
+                    VStack(spacing: 4) {
+                        HStack {
                             Image("Level 1")
                                 .resizable()
                                 .frame(width: 52, height: 50)
@@ -114,54 +106,49 @@ struct QuestPage: View {
                         Text("Mulai ngobrol dan temukan teman baru")
                             .font(.caption)
                             .foregroundColor(.gray)
-                        Text("0 YooBuddy")
+                        Text("\(buddies.count) YooBuddy")
                             .font(.title)
                             .foregroundStyle(.indigo)
                             .fontWeight(.bold)
-                        
                         Text("Ambil tantangan pertama kamu sekarang!")
                             .font(.caption)
                             .foregroundStyle(.gray)
-                        
                     }
-                    
                     .padding(.horizontal, 32)
                     .padding(.vertical, 16)
                     .background(Color.white)
                     .cornerRadius(12)
                     .frame(maxWidth: .infinity)
                     
-                    VStack{
+                    VStack {
                         Text("Ada apa di YooHoo?")
                             .font(.title)
                             .fontWeight(.bold)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 16)
-                        
                     }
                     
-                    HStack{
-                        VStack(spacing: 6){
+                    HStack {
+                        VStack(spacing: 6) {
                             Image("Tantangan")
                             Text("Terima Tantangan")
                                 .font(.subheadline)
                                 .fontWeight(.bold)
                                 .foregroundStyle(.indigo)
-                            
                             Text("Temui YooBuddy, abadikan momen berkenalan, dan tulis pengalamanmu!")
-                            //                            .padding(.top, 8)
                                 .multilineTextAlignment(.center)
                                 .foregroundStyle(.gray)
                                 .font(.caption)
                         }
                         .padding()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-
+                        
                         .background(Color.white)
                         .cornerRadius(12)
                         
                         
                         VStack(spacing: 4){
+                            
                             Image("List YooBuddy")
                             Text("List YooBuddy")
                                 .font(.subheadline)
@@ -174,29 +161,25 @@ struct QuestPage: View {
                         }
                         .padding()
                         .frame(maxWidth: .infinity)
-                        
                         .background(Color.white)
                         .cornerRadius(12)
-                        
-                        
                     }
                     .padding(.horizontal, 16)
-//                    .padding()
-//                    .padding(.horizontal, 16)
-                    
-                    
                     
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-
+            }
+            .background(Color.gray.opacity(0.05))
+            .sheet(isPresented: $showExperienceForm) { // Menambahkan sheet
+                NavigationView {
+                    ExperienceFormView()
+                }
             }
             .background(Color.gray.opacity(0.05))
         }
     }
-    
-    
 }
 
 #Preview {
-    QuestPage()
+    QuestPage().modelContainer(for: [Buddy.self], inMemory: false)
 }

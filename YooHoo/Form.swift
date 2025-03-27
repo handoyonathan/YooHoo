@@ -8,24 +8,23 @@
 import SwiftUI
 import UIKit
 import Speech
+import SwiftData
 
 struct ExperienceFormView: View {
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.modelContext) var modelContext
     @State private var name: String = ""
     @State private var note: String = ""
     @State private var selectedImage: UIImage?
     @State private var showImagePicker: Bool = false
     @State private var showActionSheet: Bool = false
     @State private var sourceType: UIImagePickerController.SourceType = .photoLibrary
-    
     @State private var isRecording = false
     private let speechRecognizer = SpeechRecognizer()
     
-    @State private var text: String = "Tulis sesuatu di sini..."
-    
     var body: some View {
         VStack(spacing: 20) {
-            VStack(alignment: .leading, spacing: 10){
+            VStack(alignment: .leading, spacing: 10) {
                 Text("Gimana pengalamanmu?")
                     .font(.system(size: 24))
                     .bold()
@@ -70,12 +69,11 @@ struct ExperienceFormView: View {
                 TextField("Masukkan nama", text: $name)
                     .padding()
                     .clipShape(RoundedRectangle(cornerRadius: 8))
-
+                
                 Divider().padding(.horizontal, 12)
                 
-                HStack() {
-                    
-                    TextField("Share key topics or fun takeaways!", text: $note)
+                HStack {
+                    TextField("Share key topics or fun takeaways!", text: $note, axis: .vertical)
                         .padding().lineLimit(5)
                         .onAppear {
                             speechRecognizer.requestPermission()
@@ -96,12 +94,10 @@ struct ExperienceFormView: View {
                             .padding()
                     }
                 }
-                
             }
-                .background(Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.3)))
-            
+            .background(Color.white)
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.3)))
             
             Spacer()
         }
@@ -113,11 +109,23 @@ struct ExperienceFormView: View {
                 .foregroundColor(.blue),
             
             trailing: Button("Add") {
-                print("Hai")
-                // Tambahkan aksi untuk menyimpan data
+                print("masuk ke add nih")
+                let imagePath = saveImageToFileSystem(selectedImage) ?? "default_image"
+                let newBuddy = Buddy(
+                    name: name,
+                    image: imagePath,
+                    description: note
+                )
+                modelContext.insert(newBuddy)
+                try? modelContext.save()
+                presentationMode.wrappedValue.dismiss()
+                print(newBuddy.name)
+                print(newBuddy.image)
+                print(newBuddy.experience)
+                print("sudah masuk")
             }
-                .disabled(name.isEmpty || note.isEmpty)
-                .foregroundColor(name.isEmpty || note.isEmpty ? .gray : .blue)
+                .disabled(name.isEmpty || note.isEmpty || selectedImage == nil)
+                .foregroundColor(name.isEmpty || note.isEmpty || selectedImage == nil ? .gray : .blue)
         )
         .actionSheet(isPresented: $showActionSheet) {
             ActionSheet(title: Text("Pilih Sumber Gambar"), buttons: [
@@ -134,6 +142,24 @@ struct ExperienceFormView: View {
         }
         .sheet(isPresented: $showImagePicker) {
             ImagePicker(selectedImage: $selectedImage, sourceType: sourceType)
+        }
+    }
+    
+    // Fungsi untuk menyimpan gambar ke file system dan mengembalikan path-nya
+    private func saveImageToFileSystem(_ image: UIImage?) -> String? {
+        guard let image = image,
+              let data = image.jpegData(compressionQuality: 0.8) else { return nil }
+        
+        let fileName = UUID().uuidString + ".jpeg"
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let fileURL = documentsDirectory.appendingPathComponent(fileName)
+        
+        do {
+            try data.write(to: fileURL)
+            return fileName
+        } catch {
+            print("Error saving image: \(error)")
+            return nil
         }
     }
 }
@@ -172,26 +198,8 @@ struct ImagePicker: UIViewControllerRepresentable {
     }
 }
 
-// MARK: - Main View to Present Sheet
-struct Content2View: View {
-    @State private var showModal = false
-    
-    var body: some View {
-        VStack {
-            Button("Show Experience Form") {
-                showModal.toggle()
-            }
-            .sheet(isPresented: $showModal) {
-                NavigationView {
-                    ExperienceFormView()
-                }
-            }
-        }
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        Content2View()
-    }
-}
+//#Preview {
+//    NavigationView {
+//        ExperienceFormView()
+//    }
+//}

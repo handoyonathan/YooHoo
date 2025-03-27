@@ -10,20 +10,30 @@ import SwiftUI
 struct BuddyCardView: View {
     let buddy: Buddy
     var onTap: () -> Void
-
+    
     var body: some View {
-        VStack(spacing: 4){
-            Image(buddy.image)
-                .resizable()
-                .scaledToFill()
-                .frame(maxWidth: 160, maxHeight: 160)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+        VStack(spacing: 4) {
+            if let imagePath = getImagePath(for: buddy.image),
+               let uiImage = UIImage(contentsOfFile: imagePath.path) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(maxWidth: 160, maxHeight: 160)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            } else {
+                Image(systemName: "person.circle.fill")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(maxWidth: 160, maxHeight: 160)
+                    .foregroundColor(.gray)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            }
             
             Text(buddy.name)
                 .font(.headline.bold())
                 .foregroundColor(.indigo)
             
-            Text("Sneak-peek perkenalan sa..")
+            Text(buddy.experience)
                 .font(.caption)
                 .foregroundColor(.gray)
                 .frame(maxWidth: 158, maxHeight: 16)
@@ -35,6 +45,11 @@ struct BuddyCardView: View {
         .onTapGesture {
             onTap()
         }
+    }
+    
+    private func getImagePath(for fileName: String) -> URL? {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        return documentsDirectory.appendingPathComponent(fileName)
     }
 }
 

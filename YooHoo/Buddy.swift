@@ -6,10 +6,17 @@
 //
 
 import SwiftUI
+import SwiftData
 
-struct Buddy: Identifiable {
-    let id = UUID()
-    let name: String
-    let image: String
-    let description: String
+@Model
+class Buddy: Identifiable {
+    var name: String
+    var image: String
+    var experience: String
+    
+    init(id: UUID = UUID(), name: String, image: String, description: String) {
+        self.name = name
+        self.image = image
+        self.experience = description
+    }
 }
