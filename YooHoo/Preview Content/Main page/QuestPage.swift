@@ -17,7 +17,12 @@ struct QuestPage: View {
                             .fontWeight(.bold)
                             .padding(.bottom, 8)
                         Text("Pilih tantangan, ajak ngobrol, dan tambah YooBuddy baru!")
+<<<<<<< Updated upstream:YooHoo/QuestPage.swift
                             .font(.subheadline)
+=======
+                        // ganti teman aja drpd yoobudy
+                            .font(.body)
+>>>>>>> Stashed changes:YooHoo/Preview Content/Main page/QuestPage.swift
                             .foregroundStyle(.black.opacity(0.7))
                     }
                     .padding(.top, 16) // Explicit top padding

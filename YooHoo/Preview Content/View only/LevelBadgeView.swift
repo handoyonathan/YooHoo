@@ -3,7 +3,7 @@ import SwiftUI
 struct LevelBadgeView: View {
     let buddyCount: Int
     
-    private let levelThresholds = [0, 6, 11, 16, 31]
+    private let levelThresholds = [0, 5, 10, 15, 30]
 
     var body: some View {
         HStack {

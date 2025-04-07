@@ -53,7 +53,7 @@ struct BuddyListView: View {
                 }
             }
             .padding(.top, 16)
-            .background(Color.gray.opacity(0.1))
+            .background(Color.gray.opacity(0.05))
             .sheet(isPresented: $showDetail) {
                 NavigationView {
                     ExperienceFormView()
