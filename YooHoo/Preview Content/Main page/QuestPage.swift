@@ -3,6 +3,9 @@ import SwiftData
 
 struct QuestPage: View {
     @State private var showExperienceForm = false
+    @State private var selectedBadgeIndex: Int? = nil
+    @State private var showBadgePopup = false
+    
     @Environment(\.modelContext) var modelContext
     @Query private var buddies: [Buddy]
     @StateObject private var questManager = QuestManager()
@@ -28,14 +31,11 @@ struct QuestPage: View {
                             .fontWeight(.bold)
                             .padding(.bottom, 8)
                         Text("Pilih tantangan, ajak ngobrol, dan tambah teman baru!")
-
-                        // ganti teman aja drpd yoobudy
                             .font(.body)
-
                             .foregroundStyle(.black.opacity(0.7))
                     }
-                    .padding(.top, 16) // Explicit top padding
-                    .padding(.horizontal) // Separate horizontal padding
+                    .padding(.top, 16)
+                    .padding(.horizontal)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
                     VStack {
@@ -103,9 +103,13 @@ struct QuestPage: View {
                     }
                     
                     VStack(spacing: 4) {
-                        HStack {
-                            LevelBadgeView(buddyCount: buddies.count)
-                        }
+//                        HStack {
+                            LevelBadgeView(buddyCount: buddies.count) { index in
+                                selectedBadgeIndex = index
+                                showBadgePopup = true
+                                
+                            }
+//                        }
                         .padding(.bottom, 4)
                         Text("Wah!! Kamu udah punya")
                             .font(.caption)
@@ -187,6 +191,32 @@ struct QuestPage: View {
                     ExperienceFormView()
                 }
             }
+            .overlay(
+                Group {
+                    if showBadgePopup, let index = selectedBadgeIndex {
+                        ZStack {
+                            Color.black.opacity(0.5)
+                                .ignoresSafeArea()
+                                .onTapGesture {
+                                    showBadgePopup = false
+                                }
+
+                            VStack {
+                                Spacer()
+                                Image(buddies.count >= levelThresholds[index] ? "Level \(index + 1)" : "Unlocked \(index + 1)")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 250, height: 300)
+                                    .onTapGesture {
+                                        showBadgePopup = false
+                                    }
+                                Spacer()
+                            }
+                        }
+                        .transition(.opacity)
+                    }
+                }
+            )
         }
     }
 }
