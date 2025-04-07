@@ -5,179 +5,22 @@ struct QuestPage: View {
     @State private var showExperienceForm = false
     @State private var selectedBadgeIndex: Int? = nil
     @State private var showBadgePopup = false
-    
     @Environment(\.modelContext) var modelContext
     @Query private var buddies: [Buddy]
     @StateObject private var questManager = QuestManager()
     
+    var currentLevel: BuddyLevel {
+        BuddyLevel.currentLevel(for: buddies.count)
+    }
+    
     var body: some View {
-        let currentLevel = BuddyLevel.currentLevel(for: buddies.count)
         NavigationStack {
             ScrollView {
                 VStack {
-                    VStack(alignment: .leading) {
-                        Text("Siap berkenalan?")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .padding(.bottom, 8)
-                        Text("Pilih tantangan, ajak ngobrol, dan tambah teman baru!")
-                            .font(.body)
-                            .foregroundStyle(.black.opacity(0.7))
-                    }
-                    .padding(.top, 16)
-                    .padding(.horizontal)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    VStack {
-                        ZStack {
-                            Image(.cardQuest)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(maxWidth: .infinity)
-                                .clipped()
-                            VStack {
-                                Text(questManager.currentQuest)
-                                    .font(.callout)
-                                    .fontWeight(.medium)
-                                    .multilineTextAlignment(.center)
-                                    .padding()
-                            }
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .cornerRadius(12)
-                        .padding(.horizontal, 16)
-                        HStack(spacing: 12){
-                            Button(action: {questManager.shuffleQuest()}) {
-                                HStack{
-                                    Image(systemName: "shuffle")
-                                    Text("Acak Topik")
-                                        .font(.callout)
-                                }
-                                .font(.headline)
-                                .fontWeight(.regular)
-                                .foregroundColor(.indigo)
-                                .padding(.vertical, 14)
-                                .frame(maxWidth:.infinity)
-                                .background(Color.white)
-                                .cornerRadius(12)
-                            }
-                            
-                            Button(action: {
-                                showExperienceForm = true
-                            }) {
-                                HStack {
-                                    Image(systemName: "eyeglasses")
-                                    Text("Ambil Tantangan")
-                                        .font(.callout)
-                                }
-                                .font(.headline)
-                                .fontWeight(.regular)
-                                .foregroundColor(.white)
-                                .padding(.vertical, 14)
-                                .frame(maxWidth:.infinity)
-                                .background(Color.indigo)
-                                .cornerRadius(12)
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.horizontal, 16)
-                    }
-                    
-                    VStack {
-                        Text("Progressku")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 16)
-                    }
-                    
-                    VStack(spacing: 4) {
-//                        HStack {
-                            LevelBadgeView(buddyCount: buddies.count) { index in
-                                selectedBadgeIndex = index
-                                showBadgePopup = true
-                                
-                            }
-//                        }
-                        .padding(.bottom, 4)
-                        if currentLevel == .master || buddies.count >= 50 {
-                            Text("Hai \(currentLevel.displayName)! Saat ini kamu udah punya..")
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                        } else {
-                            Text("Hai \(currentLevel.displayName)! Perjalananmu masih seru, yuk tambah teman lagi!")
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                        }
-                        Text("\(buddies.count) Teman")
-                            .font(.title)
-                            .foregroundStyle(.indigo)
-                            .fontWeight(.bold)
-                        if let nextLevel = BuddyLevel.nextLevel(from: buddies.count) {
-                            Text("Cari \(nextLevel.rawValue - buddies.count) teman lagi untuk naik ke level \(nextLevel.displayName) 🎉")
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                        } else {
-                            Text("Bareng YooHoo, kamu menaklukkan puncak pertemanan! 🎉")
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                        }
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 16)
-                    .background(Color.white)
-                    .cornerRadius(12)
-                    .frame(maxWidth: .infinity)
-                    
-                    VStack {
-                        Text("Ada apa di YooHoo?")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 16)
-                    }
-                    
-                    HStack {
-                        VStack(spacing: 6) {
-                            Image("Tantangan")
-                                .resizable()
-                                .frame(width: 64, height: 64)
-                                .scaledToFit()
-                            Text("Terima Tantangan")
-                                .font(.subheadline)
-                                .fontWeight(.bold)
-                                .foregroundStyle(.indigo)
-                            Text("Temui teman baru, abadikan momen berkenalan, dan tulis pengalamanmu!")
-                                .multilineTextAlignment(.center)
-                                .foregroundStyle(.gray)
-                                .font(.caption)
-                        }
-                        .padding()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color.white)
-                        .cornerRadius(12)
-                        
-                        VStack(spacing: 6){
-                            Image("List YooBuddy")
-                                .resizable()
-                                .frame(width: 64, height: 64)
-                                .scaledToFit()
-                            Text("Lihat Teman")
-                                .font(.subheadline)
-                                .fontWeight(.bold)
-                                .foregroundStyle(.indigo)
-                            Text("Lihat kembali siapa saja yang sudah kamu temui dan kenali mereka lebih dalam.")
-                                .multilineTextAlignment(.center)
-                                .foregroundStyle(.gray)
-                                .font(.caption)
-                        }
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.white)
-                        .cornerRadius(12)
-                    }
-                    .padding(.horizontal, 16)
+                    headerSection
+                    questCardSection
+                    progressSection
+                    infoSection
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             }
@@ -187,32 +30,219 @@ struct QuestPage: View {
                     ExperienceFormView()
                 }
             }
-            .overlay(
-                Group {
-                    if showBadgePopup, let index = selectedBadgeIndex {
-                        ZStack {
-                            Color.black.opacity(0.5)
-                                .ignoresSafeArea()
-                                .onTapGesture {
-                                    showBadgePopup = false
-                                }
+            .overlay(BadgePopupView())
+        }
+    }
 
-                            VStack {
-                                Spacer()
-                                Image(buddies.count >= levelThresholds[index] ? "Level \(index + 1)" : "Unlocked \(index + 1)")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 250, height: 300)
-                                    .onTapGesture {
-                                        showBadgePopup = false
-                                    }
-                                Spacer()
-                            }
-                        }
-                        .transition(.opacity)
-                    }
+    // MARK: - View Sections
+
+    var headerSection: some View {
+        VStack(alignment: .leading) {
+            Text("Siap berkenalan?")
+                .font(.title)
+                .fontWeight(.bold)
+                .padding(.bottom, 8)
+            Text("Pilih tantangan, ajak ngobrol, dan tambah teman baru!")
+                .font(.body)
+                .foregroundStyle(.black.opacity(0.7))
+        }
+        .padding(.top, 16)
+        .padding(.horizontal)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    var questCardSection: some View {
+        VStack {
+            ZStack {
+                Image(.cardQuest)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(maxWidth: .infinity)
+                    .clipped()
+                VStack {
+                    Text(questManager.currentQuest)
+                        .font(.callout)
+                        .fontWeight(.medium)
+                        .multilineTextAlignment(.center)
+                        .padding()
                 }
-            )
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            .frame(maxWidth: .infinity)
+            .cornerRadius(12)
+            .padding(.horizontal, 16)
+
+            HStack(spacing: 12){
+                Button(action: { questManager.shuffleQuest() }) {
+                    HStack {
+                        Image(systemName: "shuffle")
+                        Text("Acak Topik")
+                            .font(.callout)
+                    }
+                    .font(.headline)
+                    .fontWeight(.regular)
+                    .foregroundColor(.indigo)
+                    .padding(.vertical, 14)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.white)
+                    .cornerRadius(12)
+                }
+
+                Button(action: {
+                    showExperienceForm = true
+                }) {
+                    HStack {
+                        Image(systemName: "eyeglasses")
+                        Text("Ambil Tantangan")
+                            .font(.callout)
+                    }
+                    .font(.headline)
+                    .fontWeight(.regular)
+                    .foregroundColor(.white)
+                    .padding(.vertical, 14)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.indigo)
+                    .cornerRadius(12)
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 16)
+        }
+    }
+
+    var progressSection: some View {
+        VStack {
+            Text("Progressku")
+                .font(.title)
+                .fontWeight(.bold)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 16)
+
+            VStack(spacing: 4) {
+                LevelBadgeView(buddyCount: buddies.count) { index in
+                    selectedBadgeIndex = index
+                    showBadgePopup = true
+                }
+                .padding(.bottom, 4)
+
+                Text(levelGreetingText)
+                    .font(.caption)
+                    .foregroundColor(.gray)
+
+                Text("\(buddies.count) Teman")
+                    .font(.title)
+                    .foregroundStyle(.indigo)
+                    .fontWeight(.bold)
+
+                Text(levelProgressText)
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 16)
+            .background(Color.white)
+            .cornerRadius(12)
+            .frame(maxWidth: .infinity)
+        }
+    }
+
+    var infoSection: some View {
+        VStack {
+            Text("Ada apa di YooHoo?")
+                .font(.title)
+                .fontWeight(.bold)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 16)
+
+            HStack {
+                VStack(spacing: 6) {
+                    Image("Tantangan")
+                        .resizable()
+                        .frame(width: 64, height: 64)
+                        .scaledToFit()
+                    Text("Terima Tantangan")
+                        .font(.subheadline)
+                        .fontWeight(.bold)
+                        .foregroundStyle(.indigo)
+                    Text("Temui teman baru, abadikan momen berkenalan, dan tulis pengalamanmu!")
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(.gray)
+                        .font(.caption)
+                }
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.white)
+                .cornerRadius(12)
+
+                VStack(spacing: 6) {
+                    Image("List YooBuddy")
+                        .resizable()
+                        .frame(width: 64, height: 64)
+                        .scaledToFit()
+                    Text("Lihat Teman")
+                        .font(.subheadline)
+                        .fontWeight(.bold)
+                        .foregroundStyle(.indigo)
+                    Text("Lihat kembali siapa saja yang sudah kamu temui dan kenali mereka lebih dalam.")
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(.gray)
+                        .font(.caption)
+                }
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color.white)
+                .cornerRadius(12)
+            }
+            .padding(.horizontal, 16)
+        }
+    }
+
+    // MARK: - Computed Texts
+
+    var levelGreetingText: String {
+        if currentLevel == .master || buddies.count >= 50 {
+            return "Hai \(currentLevel.displayName)! Saat ini kamu udah punya.."
+        } else {
+            return "Hai \(currentLevel.displayName)! Perjalananmu masih seru, yuk tambah teman lagi!"
+        }
+    }
+
+    var levelProgressText: String {
+        if let nextLevel = BuddyLevel.nextLevel(from: buddies.count) {
+            return "Cari \(nextLevel.rawValue - buddies.count) teman lagi untuk naik ke level \(nextLevel.displayName) 🎉"
+        } else {
+            return "Bareng YooHoo, kamu menaklukkan puncak pertemanan! 🎉"
+        }
+    }
+
+    // MARK: - Badge Popup View
+
+    @ViewBuilder
+    private func BadgePopupView() -> some View {
+        if showBadgePopup, let index = selectedBadgeIndex {
+            let isUnlocked = buddies.count >= BuddyLevel.levelThresholds[index]
+            let imageName = isUnlocked ? "Level \(index + 1)" : "Unlocked \(index + 1)"
+
+            ZStack {
+                Color.black.opacity(0.5)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        showBadgePopup = false
+                    }
+
+                VStack {
+                    Spacer()
+                    Image(imageName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 250, height: 300)
+                        .onTapGesture {
+                            showBadgePopup = false
+                        }
+                    Spacer()
+                }
+            }
+            .transition(.opacity)
         }
     }
 }
