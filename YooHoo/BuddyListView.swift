@@ -14,17 +14,46 @@ struct BuddyListView: View {
     
     @State private var selectedBuddy: Buddy?
     @State private var showDetail = false
+    @State private var selectedFilter = FriendFilter.AZ
     
     let columns = [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 0)]
+    
+    private var filteredBuddies: [Buddy] {
+        switch selectedFilter {
+        case .AZ:
+            return buddies.sorted { $0.name < $1.name }
+        case .ZA:
+            return buddies.sorted { $0.name > $1.name }
+        case .latest:
+            return buddies.sorted { $0.createdAt > $1.createdAt }
+        case .oldest:
+            return buddies.sorted { $0.createdAt < $1.createdAt }
+        }
+    }
     
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 8) {
-                Text("List YooBuddy")
-                    .font(.title)
-                    .bold()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
+                HStack {
+                    Text("List YooBuddy")
+                        .font(.title)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal)
+                    
+                    Menu {
+                        Picker("Filter", selection: $selectedFilter) {
+                            ForEach(FriendFilter.allFilter, id: \.self) { filter in
+                                Text(filter.rawValue)
+                            }
+                        }
+                        .pickerStyle(.inline)
+                    } label: {
+                        Image(systemName: "line.3.horizontal.decrease.circle")
+                            .font(.title)
+                            .padding(.horizontal)
+                    }
+                }
                 
                 Text("Jelajahi kembali momen seru dengan YooBuddy yang pernah kamu temui!")
                     .font(.body)
@@ -43,7 +72,7 @@ struct BuddyListView: View {
                                 .cornerRadius(20)
                         }
                         
-                        ForEach(buddies) { buddy in
+                        ForEach(filteredBuddies) { buddy in
                             BuddyCardView(buddy: buddy) {
                                 selectedBuddy = buddy
                             }

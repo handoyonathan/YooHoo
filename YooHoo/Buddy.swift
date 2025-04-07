@@ -13,10 +13,12 @@ class Buddy: Identifiable {
     var name: String
     var image: String
     var experience: String
+    var createdAt: Date
     
     init(id: UUID = UUID(), name: String, image: String, description: String) {
         self.name = name
         self.image = image
         self.experience = description
+        self.createdAt = Date()
     }
 }

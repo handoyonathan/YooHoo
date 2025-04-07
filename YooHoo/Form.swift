@@ -23,86 +23,89 @@ struct ExperienceFormView: View {
     private let speechRecognizer = SpeechRecognizer()
     
     var body: some View {
-        VStack(spacing: 20) {
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Gimana pengalamanmu?")
-                    .font(.system(size: 24))
-                    .bold()
-                
-                Text("Foto bareng, catat nama, dan tulis hal seru dari obrolan kalian!")
-                    .font(.system(size: 14))
-                    .foregroundColor(.gray)
-                    .multilineTextAlignment(.leading)
-                    .padding(.trailing, 100)
-            }
-            
-            Button(action: {
-                showActionSheet = true
-            }) {
-                if let image = selectedImage {
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 160, height: 160)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .clipped()
-                } else {
-                    Image(systemName: "person.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 160, height: 160)
-                        .foregroundColor(.gray)
-                }
-            }
-            
-            Button("Add Photos") {
-                showActionSheet = true
-            }
-            .font(.headline)
-            .foregroundColor(.white)
-            .padding(.horizontal, 20)
-            .padding(.vertical, 8)
-            .background(Color.indigo)
-            .cornerRadius(20)
-            
-            VStack(spacing: 0) {
-                TextField("Masukkan nama", text: $name)
-                    .padding()
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                
-                Divider().padding(.horizontal, 12)
-                
-                HStack {
-                    TextField("Share key topics or fun takeaways!", text: $note, axis: .vertical)
-                        .padding().lineLimit(5)
-                        .onAppear {
-                            speechRecognizer.requestPermission()
-                        }
+        ScrollView {
+            VStack(spacing: 20) {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Gimana pengalamanmu?")
+                        .font(.system(size: 24))
+                        .bold()
                     
-                    Button(action: {
-                        if isRecording {
-                            speechRecognizer.stopRecording()
-                        } else {
-                            speechRecognizer.startRecording { result in
-                                self.note = result
-                            }
-                        }
-                        isRecording.toggle()
-                    }) {
-                        Image(systemName: isRecording ? "mic.fill" : "mic")
-                            .foregroundColor(isRecording ? .red : .gray)
-                            .padding()
+                    Text("Foto bareng, catat nama, dan tulis hal seru dari obrolan kalian!")
+                        .font(.system(size: 14))
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.leading)
+                        .padding(.trailing, 100)
+                }
+                
+                Button(action: {
+                    showActionSheet = true
+                }) {
+                    if let image = selectedImage {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 160, height: 160)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .clipped()
+                    } else {
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 160, height: 160)
+                            .foregroundColor(.gray)
                     }
                 }
+                
+                Button("Add Photos") {
+                    showActionSheet = true
+                }
+                .font(.headline)
+                .foregroundColor(.white)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 8)
+                .background(Color.indigo)
+                .cornerRadius(20)
+                
+                VStack(spacing: 0) {
+                    TextField("Masukkan nama", text: $name)
+                        .padding()
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                    
+                    Divider().padding(.horizontal, 12)
+                    
+                    HStack {
+                        TextField("Share key topics or fun takeaways!", text: $note, axis: .vertical)
+                            .padding()
+                            .onAppear {
+                                speechRecognizer.requestPermission()
+                            }
+                        
+                        Button(action: {
+                            if isRecording {
+                                speechRecognizer.stopRecording()
+                            } else {
+                                speechRecognizer.startRecording { result in
+                                    self.note = result
+                                }
+                            }
+                            isRecording.toggle()
+                        }) {
+                            Image(systemName: isRecording ? "mic.fill" : "mic")
+                                .foregroundColor(isRecording ? .red : .gray)
+                                .padding()
+                        }
+                    }
+                }
+                .background(Color.white)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.3)))
+                
+                Spacer()
             }
-            .background(Color.white)
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.3)))
-            
-            Spacer()
+            .padding(.horizontal)
+            .padding(.bottom)
         }
-        .padding()
-        .ignoresSafeArea(.keyboard)
+        .scrollDismissesKeyboard(.interactively)
         .navigationBarItems(
             leading: Button("Cancel") {
                 presentationMode.wrappedValue.dismiss()
@@ -123,7 +126,6 @@ struct ExperienceFormView: View {
                 print(newBuddy.name)
                 print(newBuddy.image)
                 print(newBuddy.experience)
-                print("sudah masuk")
             }
                 .disabled(name.isEmpty || note.isEmpty || selectedImage == nil)
                 .foregroundColor(name.isEmpty || note.isEmpty || selectedImage == nil ? .gray : .blue)
@@ -146,7 +148,6 @@ struct ExperienceFormView: View {
         }
     }
     
-    // Fungsi untuk menyimpan gambar ke file system dan mengembalikan path-nya
     private func saveImageToFileSystem(_ image: UIImage?) -> String? {
         guard let image = image,
               let data = image.jpegData(compressionQuality: 0.8) else { return nil }
