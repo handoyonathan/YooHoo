@@ -148,7 +148,7 @@ struct QuestPage: View {
                                 .font(.subheadline)
                                 .fontWeight(.bold)
                                 .foregroundStyle(.indigo)
-                            Text("Temui YooBuddy, abadikan momen berkenalan, dan tulis pengalamanmu!")
+                            Text("Temui teman baru, abadikan momen berkenalan, dan tulis pengalamanmu!")
                                 .multilineTextAlignment(.center)
                                 .foregroundStyle(.gray)
                                 .font(.caption)

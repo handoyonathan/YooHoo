@@ -35,7 +35,7 @@ struct BuddyListView: View {
         NavigationView {
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
-                    Text("List YooBuddy")
+                    Text("List Teman")
                         .font(.title)
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -55,7 +55,7 @@ struct BuddyListView: View {
                     }
                 }
                 
-                Text("Jelajahi kembali momen seru dengan YooBuddy yang pernah kamu temui!")
+                Text("Jelajahi kembali momen seru dengan Teman yang pernah kamu temui!")
                     .font(.body)
                     .foregroundColor(.black.opacity(0.6))
                     .frame(maxWidth: .infinity, alignment: .leading)
