@@ -1,5 +1,42 @@
 import SwiftUI
 
+enum BuddyLevel: Int, CaseIterable {
+    case rookie = 0
+    case explorer = 5
+    case connector = 10
+    case engager = 15
+    case master = 30
+    
+    var displayName: String {
+        switch self {
+        case .rookie: return "Rookie"
+        case .explorer: return "Explorer"
+        case .connector: return "Connector"
+        case .engager: return "Engager"
+        case .master: return "Master"
+        }
+    }
+    
+    static func nextLevel(from count: Int) -> BuddyLevel? {
+        let sortedLevels = BuddyLevel.allCases.sorted { $0.rawValue < $1.rawValue }
+        return sortedLevels.first { count < $0.rawValue }
+    }
+    
+    static func currentLevel(for count: Int) -> BuddyLevel {
+        let sortedLevels = BuddyLevel.allCases.sorted { $0.rawValue < $1.rawValue }
+        var current = sortedLevels.first!
+        for level in sortedLevels {
+            if count >= level.rawValue {
+                current = level
+            } else {
+                break
+            }
+        }
+        return current
+    }
+
+}
+
 struct LevelBadgeView: View {
     let buddyCount: Int
     

@@ -35,7 +35,7 @@ struct BuddyListView: View {
         NavigationView {
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
-                    Text("List Teman")
+                    Text("Daftar Teman")
                         .font(.title)
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .leading)

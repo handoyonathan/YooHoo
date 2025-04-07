@@ -17,7 +17,7 @@ struct MainTabView: View {
                 }
             BuddyListView()
                 .tabItem{
-                    Label("List Teman", systemImage: "person.3")
+                    Label("Daftar Teman", systemImage: "person.3")
                     
                 }
         }

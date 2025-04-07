@@ -30,7 +30,7 @@ struct ExperienceFormView: View {
                         .font(.system(size: 24))
                         .bold()
                     
-                    Text("Foto bareng, catat nama, dan tulis hal seru dari obrolan kalian!")
+                    Text("Foto bareng, catat nama temanmu, dan tulis hal seru dari obrolan kalian!")
                         .font(.system(size: 14))
                         .foregroundColor(.gray)
                         .multilineTextAlignment(.leading)
