@@ -7,6 +7,17 @@ struct QuestPage: View {
     @Query private var buddies: [Buddy]
     @StateObject private var questManager = QuestManager()
     
+    private let levelThresholds = [0, 5, 10, 15, 30]
+    private func nextTarget(from count: Int) -> Int? {
+        for threshold in levelThresholds {
+            if count < threshold {
+                return threshold
+            }
+        }
+        return nil
+    }
+
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -16,8 +27,11 @@ struct QuestPage: View {
                             .font(.title)
                             .fontWeight(.bold)
                             .padding(.bottom, 8)
-                        Text("Pilih tantangan, ajak ngobrol, dan tambah YooBuddy baru!")
-                            .font(.subheadline)
+                        Text("Pilih tantangan, ajak ngobrol, dan tambah teman baru!")
+
+                        // ganti teman aja drpd yoobudy
+                            .font(.body)
+
                             .foregroundStyle(.black.opacity(0.7))
                     }
                     .padding(.top, 16) // Explicit top padding
@@ -93,16 +107,22 @@ struct QuestPage: View {
                             LevelBadgeView(buddyCount: buddies.count)
                         }
                         .padding(.bottom, 4)
-                        Text("Mulai ngobrol dan temukan teman baru")
+                        Text("Wah!! Kamu udah punya")
                             .font(.caption)
                             .foregroundColor(.gray)
-                        Text("\(buddies.count) YooBuddy")
+                        Text("\(buddies.count) Teman")
                             .font(.title)
                             .foregroundStyle(.indigo)
                             .fontWeight(.bold)
-                        Text("Ambil tantangan pertama kamu sekarang!")
-                            .font(.caption)
-                            .foregroundStyle(.gray)
+                        if let next = nextTarget(from: buddies.count) {
+                                Text("Cari \(next - buddies.count) teman lagi untuk naik ke level selanjutnya 🎉")
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                            } else {
+                                Text("Kamu sudah mencapai level tertinggi 🎉")
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                            }
                     }
                     .padding(.horizontal, 16)
                     .padding(.vertical, 16)
@@ -143,7 +163,7 @@ struct QuestPage: View {
                                 .resizable()
                                 .frame(width: 64, height: 64)
                                 .scaledToFit()
-                            Text("List YooBuddy")
+                            Text("List Teman")
                                 .font(.subheadline)
                                 .fontWeight(.bold)
                                 .foregroundStyle(.indigo)
