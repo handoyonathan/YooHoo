@@ -3,6 +3,9 @@ import SwiftData
 
 struct QuestPage: View {
     @State private var showExperienceForm = false
+    @State private var selectedBadgeIndex: Int? = nil
+    @State private var showBadgePopup = false
+    
     @Environment(\.modelContext) var modelContext
     @Query private var buddies: [Buddy]
     @StateObject private var questManager = QuestManager()
@@ -19,7 +22,6 @@ struct QuestPage: View {
                             .padding(.bottom, 8)
                         Text("Pilih tantangan, ajak ngobrol, dan tambah teman baru!")
                             .font(.body)
-                        
                             .foregroundStyle(.black.opacity(0.7))
                     }
                     .padding(.top, 16)
@@ -91,9 +93,13 @@ struct QuestPage: View {
                     }
                     
                     VStack(spacing: 4) {
-                        HStack {
-                            LevelBadgeView(buddyCount: buddies.count)
-                        }
+//                        HStack {
+                            LevelBadgeView(buddyCount: buddies.count) { index in
+                                selectedBadgeIndex = index
+                                showBadgePopup = true
+                                
+                            }
+//                        }
                         .padding(.bottom, 4)
                         if currentLevel == .master || buddies.count >= 50 {
                             Text("Hai \(currentLevel.displayName)! Saat ini kamu udah punya..")
@@ -181,6 +187,32 @@ struct QuestPage: View {
                     ExperienceFormView()
                 }
             }
+            .overlay(
+                Group {
+                    if showBadgePopup, let index = selectedBadgeIndex {
+                        ZStack {
+                            Color.black.opacity(0.5)
+                                .ignoresSafeArea()
+                                .onTapGesture {
+                                    showBadgePopup = false
+                                }
+
+                            VStack {
+                                Spacer()
+                                Image(buddies.count >= levelThresholds[index] ? "Level \(index + 1)" : "Unlocked \(index + 1)")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 250, height: 300)
+                                    .onTapGesture {
+                                        showBadgePopup = false
+                                    }
+                                Spacer()
+                            }
+                        }
+                        .transition(.opacity)
+                    }
+                }
+            )
         }
     }
 }
