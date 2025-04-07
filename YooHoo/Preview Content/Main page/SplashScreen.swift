@@ -6,10 +6,28 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct SplashScreenView: View {
     @State private var isActive = false // Mengontrol transisi ke tampilan utama
     @State private var opacity = 0.5 // Untuk animasi opacity
+    @State private var audioPlayer: AVAudioPlayer?
+    
+    func playYooHooSound() {
+        guard let path = Bundle.main.path(forResource: "yoohoo", ofType: "m4a") else{
+                print("Sound file not found")
+                return
+        }
+    
+    let url = URL(fileURLWithPath: path)
+    
+    do{
+        audioPlayer = try AVAudioPlayer(contentsOf: url)
+        audioPlayer?.play()
+    } catch {
+        print("Error playing sound: \(error)")
+    }
+}
     
     var body: some View {
         if isActive {
@@ -22,6 +40,7 @@ struct SplashScreenView: View {
                 .opacity(opacity)
                 .ignoresSafeArea()
                 .onAppear {
+                    playYooHooSound()
                     withAnimation(.easeIn(duration: 1.0)) {
                         self.opacity = 1.0
                     }
