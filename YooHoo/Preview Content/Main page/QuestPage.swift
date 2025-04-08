@@ -18,7 +18,6 @@ struct QuestPage: View {
             ScrollView {
                 VStack (spacing: 32){
                     headerSection
-//                    questCardSection
                     progressSection
                     infoSection
                 }
@@ -33,9 +32,9 @@ struct QuestPage: View {
             .overlay(BadgePopupView())
         }
     }
-
+    
     // MARK: - View Sections
-
+    
     var headerSection: some View {
         VStack (spacing: 12){
             VStack(alignment: .leading, spacing: 8) {
@@ -46,10 +45,10 @@ struct QuestPage: View {
                 Text("Kenalan kuy")
                     .font(.title)
                     .fontWeight(.semibold)
-//                                .padding(.bottom, 4)
+                //                                .padding(.bottom, 4)
                 Text("Pilih tantangan, ajak ngobrol, dan tambah teman baru!")
                     .font(.subheadline)
-//                    .padding(.bottom, 16)
+                //                    .padding(.bottom, 16)
                     .foregroundStyle(.black.opacity(0.7))
             }
             .padding(.top, 16)
@@ -68,7 +67,7 @@ struct QuestPage: View {
                 .background(Color.indigo.opacity(0.05))
                 .cornerRadius(12)
                 .padding(.horizontal)
-//                .padding(.bottom, 8)
+                //                .padding(.bottom, 8)
                 
                 
                 HStack(spacing: 12){
@@ -109,13 +108,9 @@ struct QuestPage: View {
             }
         }
         
-        }
-        
-
-//    var questCardSection: some View {
-//        
-//    }
-
+    }
+    
+    
     var progressSection: some View {
         VStack (spacing : 8){
             Text("Progressku")
@@ -123,23 +118,23 @@ struct QuestPage: View {
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 16)
-
+            
             VStack(spacing: 8) {
                 LevelBadgeView(buddyCount: buddies.count) { index in
                     selectedBadgeIndex = index
                     showBadgePopup = true
                 }
-//                .padding(.bottom, 8)
-
-                Text(levelGreetingText)
+                //                .padding(.bottom, 8)
+                
+                Text("Hai ").font(.subheadline).foregroundStyle(.gray) + Text(currentLevel.displayName).bold() + Text("! ").bold() + Text("Saat ini kamu punya ")
                     .font(.subheadline)
                     .foregroundColor(.gray)
-
+                
                 Text("\(buddies.count) Teman")
                     .font(.title)
                     .foregroundStyle(.indigo)
                     .fontWeight(.bold)
-
+                
                 Text(levelProgressText)
                     .font(.subheadline)
                     .foregroundColor(.gray)
@@ -151,9 +146,9 @@ struct QuestPage: View {
             .frame(maxWidth: .infinity)
         }
         
-//        .padding(.horizontal, 16)
+        //        .padding(.horizontal, 16)
     }
-
+    
     var infoSection: some View {
         VStack (spacing: 8) {
             Text("Benefits YooHoo?")
@@ -161,7 +156,7 @@ struct QuestPage: View {
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 16)
-
+            
             HStack {
                 VStack(spacing: 8) {
                     Image("Tantangan")
@@ -181,7 +176,7 @@ struct QuestPage: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.white)
                 .cornerRadius(12)
-
+                
                 VStack(spacing: 8) {
                     Image("List YooBuddy")
                         .resizable()
@@ -203,15 +198,11 @@ struct QuestPage: View {
             }
             .padding(.horizontal, 16)
         }
+        .padding(.bottom, 8)
     }
-
+    
     // MARK: - Computed Texts
-
-    var levelGreetingText: String {
-        return "Hai \(currentLevel.displayName)! Saat ini kamu udah punya.."
-        
-    }
-
+    
     var levelProgressText: String {
         if let nextLevel = BuddyLevel.nextLevel(from: buddies.count) {
             return "Cari \(nextLevel.rawValue - buddies.count) teman lagi untuk naik ke level \(nextLevel.displayName) 🎉"
@@ -219,22 +210,22 @@ struct QuestPage: View {
             return "Bareng YooHoo, kamu menaklukkan puncak pertemanan! 🎉"
         }
     }
-
+    
     // MARK: - Badge Popup View
-
+    
     @ViewBuilder
     private func BadgePopupView() -> some View {
         if showBadgePopup, let index = selectedBadgeIndex {
             let isUnlocked = buddies.count >= BuddyLevel.levelThresholds[index]
             let imageName = isUnlocked ? "Level \(index + 1)" : "Unlocked \(index + 1)"
-
+            
             ZStack {
                 Color.black.opacity(0.5)
                     .ignoresSafeArea()
                     .onTapGesture {
                         showBadgePopup = false
                     }
-
+                
                 VStack {
                     Spacer()
                     Image(imageName)
