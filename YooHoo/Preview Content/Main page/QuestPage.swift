@@ -74,7 +74,7 @@ struct QuestPage: View {
                     Button(action: { questManager.shuffleQuest() }) {
                         HStack {
                             Image(systemName: "shuffle")
-                            Text("acak topik")
+                            Text("Acak topik")
                                 .font(.callout)
                         }
                         .font(.headline)
@@ -91,7 +91,7 @@ struct QuestPage: View {
                     }) {
                         HStack {
                             Image(systemName: "eyeglasses")
-                            Text("ambil tantangan")
+                            Text("Tulis pengalaman")
                                 .font(.callout)
                         }
                         .font(.headline)
@@ -126,18 +126,50 @@ struct QuestPage: View {
                 }
                 //                .padding(.bottom, 8)
                 
-                Text("Hai ").font(.subheadline).foregroundStyle(.gray) + Text(currentLevel.displayName).bold() + Text("! ").bold() + Text("Saat ini kamu punya ")
+                Text("Hai ")
                     .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.gray)
+                + Text(currentLevel.displayName)
+                    .font(.subheadline)
+                    .fontWeight(.black)
+                    .foregroundStyle(.gray)
+                + Text("! ")
+                    .font(.subheadline)
+                    .fontWeight(.black)
+                    .foregroundStyle(.gray)
+                + Text("Saat ini kamu punya ")
+                    .font(.subheadline)
+                    .foregroundStyle(.gray)
                 
                 Text("\(buddies.count) Teman")
                     .font(.title)
                     .foregroundStyle(.indigo)
                     .fontWeight(.bold)
                 
-                Text(levelProgressText)
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
+                //                Text(levelProgressText)
+                //                    .font(.subheadline)
+                //                    .foregroundColor(.gray)
+                
+                if let nextLevel = BuddyLevel.nextLevel(from: buddies.count) {
+                    Text("Cari ")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                    + Text("\(nextLevel.rawValue - buddies.count) teman")
+                        .font(.subheadline)
+                        .fontWeight(.black)
+                        .foregroundColor(.gray)
+                    + Text(" lagi untuk naik ke level ")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                    + Text(nextLevel.displayName)
+                        .font(.subheadline)
+                        .fontWeight(.black)
+                        .foregroundColor(.gray)
+                } else {
+                    Text("Bareng YooHoo, kamu menaklukkan puncak pertemanan!")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
             }
             .padding(.horizontal, 8)
             .padding(.vertical, 24)
@@ -151,7 +183,7 @@ struct QuestPage: View {
     
     var infoSection: some View {
         VStack (spacing: 8) {
-            Text("Benefits YooHoo?")
+            Text("Benefits YooHoo")
                 .font(.title)
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -203,13 +235,13 @@ struct QuestPage: View {
     
     // MARK: - Computed Texts
     
-    var levelProgressText: String {
-        if let nextLevel = BuddyLevel.nextLevel(from: buddies.count) {
-            return "Cari \(nextLevel.rawValue - buddies.count) teman lagi untuk naik ke level \(nextLevel.displayName) 🎉"
-        } else {
-            return "Bareng YooHoo, kamu menaklukkan puncak pertemanan! 🎉"
-        }
-    }
+    //    var levelProgressText: String {
+    //        if let nextLevel = BuddyLevel.nextLevel(from: buddies.count) {
+    //            return "Cari \(nextLevel.rawValue - buddies.count) teman lagi untuk naik ke level \(nextLevel.displayName) 🎉"
+    //        } else {
+    //            return "Bareng YooHoo, kamu menaklukkan puncak pertemanan! 🎉"
+    //        }
+    //    }
     
     // MARK: - Badge Popup View
     
