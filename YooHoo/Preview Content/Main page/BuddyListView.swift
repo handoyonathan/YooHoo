@@ -12,7 +12,6 @@ struct BuddyListView: View {
     @Environment(\.modelContext) var modelContext
     @Query(sort: \Buddy.name, order: .forward) private var buddies: [Buddy]
     
-    @State private var selectedBuddy: Buddy?
     @State private var showDetail = false
     @State private var selectedFilter = FriendFilter.AZ
     
@@ -56,10 +55,11 @@ struct BuddyListView: View {
                 }
                 
                 Text("Jelajahi kembali momen seru dengan Teman yang pernah kamu temui!")
-                    .font(.body)
-                    .foregroundColor(.black.opacity(0.6))
+                    .font(.subheadline)
+                    .foregroundStyle(.black.opacity(0.7))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
+                    .padding(.trailing, 60)
                 
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 12) {
@@ -73,14 +73,15 @@ struct BuddyListView: View {
                         }
                         
                         ForEach(filteredBuddies) { buddy in
-                            BuddyCardView(buddy: buddy) {
-                                selectedBuddy = buddy
+                            NavigationLink(destination: BuddyDetailView(buddy: buddy)) {
+                                BuddyCardView(buddy: buddy)
                             }
                         }
                     }
                     .padding()
                 }
             }
+//            .navigationTitle("Daftar Teman")
             .padding(.top, 16)
             .background(Color.gray.opacity(0.05))
             .sheet(isPresented: $showDetail) {
@@ -88,14 +89,11 @@ struct BuddyListView: View {
                     ExperienceFormView()
                 }
             }
-            .sheet(item: $selectedBuddy) { buddy in
-                BuddyDetailView(buddy: buddy).presentationDetents([.medium, .large])
-            }
         }
     }
 }
 
-#Preview {
-    BuddyListView()
-        .modelContainer(for: [Buddy.self], inMemory: false)
-}
+//#Preview {
+//    BuddyListView()
+//        .modelContainer(for: [Buddy.self], inMemory: false)
+//}

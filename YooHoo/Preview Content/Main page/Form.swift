@@ -24,17 +24,16 @@ struct ExperienceFormView: View {
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
-                VStack(alignment: .leading, spacing: 10) {
+            VStack(spacing: 24) {
+                VStack(alignment: .leading, spacing: 8) {
                     Text("Gimana pengalamanmu?")
-                        .font(.system(size: 24))
-                        .bold()
+                        .font(.title)
+                        .fontWeight(.semibold)
                     
                     Text("Foto bareng, catat nama temanmu, dan tulis hal seru dari obrolan kalian!")
-                        .font(.system(size: 14))
+                        .font(.body)
                         .foregroundColor(.gray)
-                        .multilineTextAlignment(.leading)
-                        .padding(.trailing, 100)
+                        .padding(.trailing, 70)
                 }
                 
                 Button(action: {
@@ -48,33 +47,31 @@ struct ExperienceFormView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 12))
                             .clipped()
                     } else {
-                        Image(systemName: "person.circle.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 160, height: 160)
-                            .foregroundColor(.gray)
+                        ZStack{
+                            Rectangle()
+                                .frame(width: 160, height: 160)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .clipped()
+                                .foregroundColor(.gray)
+                            Image(systemName: "camera")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 70, height: 70)
+                                .foregroundStyle(.white)
+                            
+                        }
                     }
                 }
                 
-                Button("Add Photos") {
-                    showActionSheet = true
-                }
-                .font(.headline)
-                .foregroundColor(.white)
-                .padding(.horizontal, 20)
-                .padding(.vertical, 8)
-                .background(Color.indigo)
-                .cornerRadius(20)
-                
                 VStack(spacing: 0) {
-                    TextField("Masukkan nama", text: $name)
+                    TextField("Nama temanmu", text: $name)
                         .padding()
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                     
                     Divider().padding(.horizontal, 12)
                     
                     HStack {
-                        TextField("Share key topics or fun takeaways!", text: $note, axis: .vertical)
+                        TextField("Bagikan pengalaman berkenalanmu", text: $note, axis: .vertical)
                             .padding()
                             .onAppear {
                                 speechRecognizer.requestPermission()
@@ -104,15 +101,16 @@ struct ExperienceFormView: View {
             }
             .padding(.horizontal)
             .padding(.bottom)
+            .padding(.top)
         }
         .scrollDismissesKeyboard(.interactively)
         .navigationBarItems(
-            leading: Button("Cancel") {
+            leading: Button("Batal") {
                 presentationMode.wrappedValue.dismiss()
             }
                 .foregroundColor(.blue),
             
-            trailing: Button("Add") {
+            trailing: Button("Tambah") {
                 print("masuk ke add nih")
                 let imagePath = saveImageToFileSystem(selectedImage) ?? "default_image"
                 let newBuddy = Buddy(
@@ -200,8 +198,8 @@ struct ImagePicker: UIViewControllerRepresentable {
     }
 }
 
-//#Preview {
-//    NavigationView {
-//        ExperienceFormView()
-//    }
-//}
+#Preview {
+    NavigationView {
+        ExperienceFormView()
+    }
+}
