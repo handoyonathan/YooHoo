@@ -16,9 +16,9 @@ struct QuestPage: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack {
+                VStack (spacing: 32){
                     headerSection
-                    questCardSection
+//                    questCardSection
                     progressSection
                     infoSection
                 }
@@ -37,96 +37,102 @@ struct QuestPage: View {
     // MARK: - View Sections
 
     var headerSection: some View {
-        VStack(alignment: .leading) {
-            Text("Siap berkenalan?")
-                .font(.title)
-                .fontWeight(.bold)
-                .padding(.bottom, 8)
-            Text("Pilih tantangan, ajak ngobrol, dan tambah teman baru!")
-                .font(.body)
-                .foregroundStyle(.black.opacity(0.7))
-        }
-        .padding(.top, 16)
-        .padding(.horizontal)
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
-    var questCardSection: some View {
-        VStack {
-            ZStack {
-                Image(.cardQuest)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(maxWidth: .infinity)
-                    .clipped()
+        VStack (spacing: 12){
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Tantangan Harian")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.bottom, 8)
+                Text("Kenalan kuy")
+                    .font(.title)
+                    .fontWeight(.semibold)
+//                                .padding(.bottom, 4)
+                Text("Pilih tantangan, ajak ngobrol, dan tambah teman baru!")
+                    .font(.subheadline)
+//                    .padding(.bottom, 16)
+                    .foregroundStyle(.black.opacity(0.7))
+            }
+            .padding(.top, 16)
+            .padding(.horizontal)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            VStack (spacing: 16){
                 VStack {
                     Text(questManager.currentQuest)
-                        .font(.callout)
+                        .font(.body)
                         .fontWeight(.medium)
                         .multilineTextAlignment(.center)
                         .padding()
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-            .frame(maxWidth: .infinity)
-            .cornerRadius(12)
-            .padding(.horizontal, 16)
-
-            HStack(spacing: 12){
-                Button(action: { questManager.shuffleQuest() }) {
-                    HStack {
-                        Image(systemName: "shuffle")
-                        Text("Acak Topik")
-                            .font(.callout)
+                .frame(maxWidth: .infinity, idealHeight: 120)
+                .background(Color.indigo.opacity(0.05))
+                .cornerRadius(12)
+                .padding(.horizontal)
+//                .padding(.bottom, 8)
+                
+                
+                HStack(spacing: 12){
+                    Button(action: { questManager.shuffleQuest() }) {
+                        HStack {
+                            Image(systemName: "shuffle")
+                            Text("acak topik")
+                                .font(.callout)
+                        }
+                        .font(.headline)
+                        .fontWeight(.regular)
+                        .foregroundColor(.indigo)
+                        .padding(.vertical, 16)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.white)
+                        .cornerRadius(12)
                     }
-                    .font(.headline)
-                    .fontWeight(.regular)
-                    .foregroundColor(.indigo)
-                    .padding(.vertical, 14)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.white)
-                    .cornerRadius(12)
-                }
-
-                Button(action: {
-                    showExperienceForm = true
-                }) {
-                    HStack {
-                        Image(systemName: "eyeglasses")
-                        Text("Ambil Tantangan")
-                            .font(.callout)
+                    
+                    Button(action: {
+                        showExperienceForm = true
+                    }) {
+                        HStack {
+                            Image(systemName: "eyeglasses")
+                            Text("ambil tantangan")
+                                .font(.callout)
+                        }
+                        .font(.headline)
+                        .fontWeight(.regular)
+                        .foregroundColor(.white)
+                        .padding(.vertical, 16)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.indigo)
+                        .cornerRadius(12)
                     }
-                    .font(.headline)
-                    .fontWeight(.regular)
-                    .foregroundColor(.white)
-                    .padding(.vertical, 14)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.indigo)
-                    .cornerRadius(12)
                 }
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, 16)
             }
-            .frame(maxWidth: .infinity)
-            .padding(.horizontal, 16)
         }
-    }
+        
+        }
+        
+
+//    var questCardSection: some View {
+//        
+//    }
 
     var progressSection: some View {
-        VStack {
+        VStack (spacing : 8){
             Text("Progressku")
                 .font(.title)
-                .fontWeight(.bold)
+                .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 16)
 
-            VStack(spacing: 4) {
+            VStack(spacing: 8) {
                 LevelBadgeView(buddyCount: buddies.count) { index in
                     selectedBadgeIndex = index
                     showBadgePopup = true
                 }
-                .padding(.bottom, 4)
+//                .padding(.bottom, 8)
 
                 Text(levelGreetingText)
-                    .font(.caption)
+                    .font(.subheadline)
                     .foregroundColor(.gray)
 
                 Text("\(buddies.count) Teman")
@@ -135,27 +141,29 @@ struct QuestPage: View {
                     .fontWeight(.bold)
 
                 Text(levelProgressText)
-                    .font(.caption)
+                    .font(.subheadline)
                     .foregroundColor(.gray)
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 16)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 24)
             .background(Color.white)
             .cornerRadius(12)
             .frame(maxWidth: .infinity)
         }
+        
+//        .padding(.horizontal, 16)
     }
 
     var infoSection: some View {
-        VStack {
-            Text("Ada apa di YooHoo?")
+        VStack (spacing: 8) {
+            Text("Benefits YooHoo?")
                 .font(.title)
-                .fontWeight(.bold)
+                .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 16)
 
             HStack {
-                VStack(spacing: 6) {
+                VStack(spacing: 8) {
                     Image("Tantangan")
                         .resizable()
                         .frame(width: 64, height: 64)
@@ -174,7 +182,7 @@ struct QuestPage: View {
                 .background(Color.white)
                 .cornerRadius(12)
 
-                VStack(spacing: 6) {
+                VStack(spacing: 8) {
                     Image("List YooBuddy")
                         .resizable()
                         .frame(width: 64, height: 64)
@@ -200,11 +208,8 @@ struct QuestPage: View {
     // MARK: - Computed Texts
 
     var levelGreetingText: String {
-        if currentLevel == .master || buddies.count >= 50 {
-            return "Hai \(currentLevel.displayName)! Saat ini kamu udah punya.."
-        } else {
-            return "Hai \(currentLevel.displayName)! Perjalananmu masih seru, yuk tambah teman lagi!"
-        }
+        return "Hai \(currentLevel.displayName)! Saat ini kamu udah punya.."
+        
     }
 
     var levelProgressText: String {
