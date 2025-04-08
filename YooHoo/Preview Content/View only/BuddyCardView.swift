@@ -9,7 +9,6 @@ import SwiftUI
 
 struct BuddyCardView: View {
     let buddy: Buddy
-    var onTap: () -> Void
     
     var body: some View {
         VStack(spacing: 4) {
@@ -38,13 +37,9 @@ struct BuddyCardView: View {
                 .foregroundColor(.gray)
                 .frame(maxWidth: 158, maxHeight: 16)
         }
-        .frame(maxWidth: 174, maxHeight: 222)
-        .padding(8)
+        .frame(width: 174, height: 222)
         .background(Color.white)
         .cornerRadius(20)
-        .onTapGesture {
-            onTap()
-        }
     }
     
     private func getImagePath(for fileName: String) -> URL? {
@@ -53,7 +48,7 @@ struct BuddyCardView: View {
     }
 }
 
-#Preview {
-    BuddyCardView(buddy: Buddy(name: "Mimi", image: "mimi", description: "Teman yang asik!"), onTap: {})
-        .previewLayout(.sizeThatFits)
-}
+//#Preview {
+//    BuddyCardView(buddy: Buddy(name: "Mimi", image: "mimi", description: "Teman yang asik!"))
+//        .previewLayout(.sizeThatFits)
+//}
