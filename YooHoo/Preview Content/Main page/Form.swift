@@ -30,10 +30,10 @@ struct ExperienceFormView: View {
                         .font(.title)
                         .fontWeight(.semibold)
                     
-                    Text("Foto bareng, catat nama temanmu, dan tulis hal seru dari obrolan kalian!")
-                        .font(.body)
+                    Text("Selfie bareng, catat nama temanmu, dan tulis hal seru dari obrolan kalian!")
+                        .font(.subheadline)
                         .foregroundColor(.gray)
-                        .padding(.trailing, 70)
+//                        .padding(.trailing, 70)
                 }
                 
                 Button(action: {

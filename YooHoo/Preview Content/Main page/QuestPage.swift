@@ -38,15 +38,15 @@ struct QuestPage: View {
     var headerSection: some View {
         VStack (spacing: 12){
             VStack(alignment: .leading, spacing: 8) {
-                Text("Tantangan Harian")
+                Text("Tantangan")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.bottom, 8)
-                Text("Kenalan kuy")
+                Text("Mulai Kenalan")
                     .font(.title)
                     .fontWeight(.semibold)
                 //                                .padding(.bottom, 4)
-                Text("Pilih tantangan, ajak ngobrol, dan tambah teman baru!")
+                Text("Pilih topik, ajak ngobrol, dan tambah teman baru!")
                     .font(.subheadline)
                 //                    .padding(.bottom, 16)
                     .foregroundStyle(.black.opacity(0.7))
@@ -64,7 +64,7 @@ struct QuestPage: View {
                         .padding()
                 }
                 .frame(maxWidth: .infinity, idealHeight: 120)
-                .background(Color.indigo.opacity(0.05))
+                .background(Color.white)
                 .cornerRadius(12)
                 .padding(.horizontal)
                 //                .padding(.bottom, 8)
@@ -90,7 +90,7 @@ struct QuestPage: View {
                         showExperienceForm = true
                     }) {
                         HStack {
-                            Image(systemName: "eyeglasses")
+                            Image(systemName: "pencil.line")
                             Text("Tulis pengalaman")
                                 .font(.callout)
                         }
@@ -182,55 +182,65 @@ struct QuestPage: View {
     }
     
     var infoSection: some View {
-        VStack (spacing: 8) {
-            Text("Benefits YooHoo")
+        VStack (alignment: .leading){
+            Text("Tentang YooHoo")
                 .font(.title)
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 16)
-            
-            HStack {
-                VStack(spacing: 8) {
-                    Image("Tantangan")
-                        .resizable()
-                        .frame(width: 64, height: 64)
-                        .scaledToFit()
-                    Text("Terima Tantangan")
-                        .font(.subheadline)
-                        .fontWeight(.bold)
-                        .foregroundStyle(.indigo)
-                    Text("Temui teman baru, abadikan momen berkenalan, dan tulis pengalamanmu!")
-                        .multilineTextAlignment(.center)
-                        .foregroundStyle(.gray)
-                        .font(.caption)
-                }
-                .padding()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.white)
-                .cornerRadius(12)
+            ZStack(alignment: .leading) {
+                Rectangle()
+                    .fill(Color.white)
+                    .frame(idealWidth: .infinity)
+                    .cornerRadius(20)
                 
-                VStack(spacing: 8) {
-                    Image("List YooBuddy")
+                HStack(spacing: 0) {
+                    Image("Binder")
                         .resizable()
-                        .frame(width: 64, height: 64)
-                        .scaledToFit()
-                    Text("Lihat Teman")
-                        .font(.subheadline)
-                        .fontWeight(.bold)
-                        .foregroundStyle(.indigo)
-                    Text("Lihat kembali siapa saja yang sudah kamu temui dan kenali mereka lebih dalam.")
-                        .multilineTextAlignment(.center)
-                        .foregroundStyle(.gray)
-                        .font(.caption)
+                        .frame(width: 50, height: 240)
+                        .padding(.leading, -25)
+                    
+                    VStack (spacing: 16){
+                        VStack (alignment: .leading, spacing: 8){
+                            Text("Tantangan Seru 🎁")
+                                .fontWeight(.semibold)
+                            Text("Pilih tantangan seru dan mulai ngobrol tanpa bingung cari topik.")
+                                .font(.subheadline)
+                                .foregroundStyle(.gray)
+                        }
+                        Divider()
+                        
+                        VStack(alignment: .leading, spacing: 8){
+                            Text("Catat Momen 📝")
+                                .fontWeight(.semibold)
+                            Text("Simpan nama temamnmu, selfie, dan obrolan biar momen gak terlupa.")
+                                .font(.subheadline)
+                                .foregroundStyle(.gray)
+                        }
+                        Divider()
+                        
+                        VStack(alignment: .leading, spacing: 8){
+                            Text("Tambah Teman, Naik Level! 🎉")
+                                .fontWeight(.semibold)
+                            Text("Tambah Teman, naik level, dan jadilah Master YooHoo!")
+                                .font(.subheadline)
+                                .foregroundStyle(.gray)
+                        }
+                        
+                        
+                        
+                    }.padding()
+                        .padding(.vertical, 16)
+                    
                 }
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.white)
-                .cornerRadius(12)
             }
-            .padding(.horizontal, 16)
+            .padding(.horizontal)
+            .padding(.leading, 24)
+
+            
         }
-        .padding(.bottom, 8)
+        
+        
     }
     
     // MARK: - Computed Texts

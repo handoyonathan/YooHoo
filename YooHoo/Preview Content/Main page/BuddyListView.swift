@@ -20,9 +20,9 @@ struct BuddyListView: View {
     private var filteredBuddies: [Buddy] {
         switch selectedFilter {
         case .AZ:
-            return buddies.sorted { $0.name < $1.name }
+            return buddies.sorted { $0.name.lowercased() < $1.name.lowercased() }
         case .ZA:
-            return buddies.sorted { $0.name > $1.name }
+            return buddies.sorted { $0.name.lowercased() > $1.name.lowercased() }
         case .latest:
             return buddies.sorted { $0.createdAt > $1.createdAt }
         case .oldest:

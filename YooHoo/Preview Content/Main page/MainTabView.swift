@@ -12,7 +12,7 @@ struct MainTabView: View {
         TabView{
             QuestPage()
                 .tabItem{
-                    Label("Tantangan Harian", systemImage: "gift")
+                    Label("Tantangan", systemImage: "gift")
                     
                 }
             BuddyListView()
