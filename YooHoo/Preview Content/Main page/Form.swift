@@ -33,8 +33,8 @@ struct ExperienceFormView: View {
                     Text("Selfie bareng, catat nama temanmu, dan tulis hal seru dari obrolan kalian!")
                         .font(.subheadline)
                         .foregroundColor(.gray)
-//                        .padding(.trailing, 70)
-                }
+                    //                        .padding(.trailing, 70)
+                } .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Button(action: {
                     showActionSheet = true
