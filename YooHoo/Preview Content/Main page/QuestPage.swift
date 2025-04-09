@@ -200,38 +200,40 @@ struct QuestPage: View {
                         .frame(width: 50, height: 240)
                         .padding(.leading, -25)
                     
-                    VStack (spacing: 16){
-                        VStack (alignment: .leading, spacing: 8){
+                    VStack(spacing: 16) {
+                        VStack(alignment: .leading, spacing: 8) {
                             Text("Tantangan Seru 🎁")
                                 .fontWeight(.semibold)
                             Text("Pilih tantangan seru dan mulai ngobrol tanpa bingung cari topik.")
                                 .font(.subheadline)
                                 .foregroundStyle(.gray)
                         }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        
                         Divider()
                         
-                        VStack(alignment: .leading, spacing: 8){
+                        VStack(alignment: .leading, spacing: 8) {
                             Text("Catat Momen 📝")
                                 .fontWeight(.semibold)
-                            Text("Simpan nama temamnmu, selfie, dan obrolan biar momen gak terlupa.")
+                            Text("Simpan nama temanmu, selfie, dan obrolan biar momen gak terlupa.")
                                 .font(.subheadline)
                                 .foregroundStyle(.gray)
                         }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        
                         Divider()
                         
-                        VStack(alignment: .leading, spacing: 8){
+                        VStack(alignment: .leading, spacing: 8) {
                             Text("Tambah Teman, Naik Level! 🎉")
                                 .fontWeight(.semibold)
                             Text("Tambah Teman, naik level, dan jadilah Master YooHoo!")
                                 .font(.subheadline)
                                 .foregroundStyle(.gray)
                         }
-                        
-                        
-                        
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     .padding()
-                        .padding(.vertical, 8)
+                    .padding(.vertical, 8)
                     
                 }
             }
