@@ -182,11 +182,11 @@ struct QuestPage: View {
     }
     
     var infoSection: some View {
-        VStack (alignment: .leading){
+        VStack (alignment: .leading, spacing: 8){
             Text("Tentang YooHoo")
                 .font(.title)
                 .fontWeight(.semibold)
-                .frame(maxWidth: .infinity, alignment: .leading)
+//                .frame(alignment: .leading)
                 .padding(.horizontal, 16)
             ZStack(alignment: .leading) {
                 Rectangle()
@@ -229,7 +229,8 @@ struct QuestPage: View {
                         
                         
                         
-                    }.padding()
+                    }
+                    .padding()
                         .padding(.vertical, 16)
                     
                 }
@@ -239,7 +240,7 @@ struct QuestPage: View {
 
             
         }
-        
+        .padding(.bottom, 8)
         
     }
     
