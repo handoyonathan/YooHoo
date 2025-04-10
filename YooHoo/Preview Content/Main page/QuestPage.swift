@@ -215,7 +215,7 @@ struct QuestPage: View {
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Catat Momen 📝")
                                 .fontWeight(.semibold)
-                            Text("Simpan nama temanmu, selfie, dan obrolan biar momen gak terlupa.")
+                            Text("Catat nama temanmu, obrolanmu, dan selfie bareng, biar momen gak terlupa.")
                                 .font(.subheadline)
                                 .foregroundStyle(.gray)
                         }
